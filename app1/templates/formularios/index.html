@@ -1,0 +1,58 @@
+{% extends "formato.html" %}
+
+{% block title %}
+Calculadora de Cuotas
+{% endblock title %}
+
+{% block container %}
+<div class="row">
+    <div class="col-3">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Monto: </label>
+                <input type="text" name="monto" class="form-control" id="monto"
+                    placeholder="Ingrese el monto a solicitar" required>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Tasa de interes: </label>
+                <input type="text" name="tasa" class="form-control" id="tasa" placeholder="Ingrese la tasa de interes"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Plazo en años: </label>
+                <input type="text" name="plazo" class="form-control" id="plazo" placeholder="Ingrese el plazo en años"
+                    required>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-outline-dark">Calcular</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-8">
+        <table class="table table-dark table-borderless table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Monto</th>
+                    <th>Tasa</th>
+                    <th>Plazo</th>
+                    <th>Cuota Mensual</th>
+                    <th>Total a Pagar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for c in cuotas %}
+                    <td>{{ c.monto }}</td>
+                    <td>{{ c.tasa }}</td>
+                    <td>{{ c.plazo }}</td>
+                    <td>{{ c.cuota|floatformat:2 }}</td>
+                    <td>{{ c.total|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock container %}
